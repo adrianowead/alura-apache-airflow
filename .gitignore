@@ -1,0 +1,25 @@
+.env
+.docker/
+.vs/
+logs/*
+!logs/.gitkeep
+.idea/*
+__pycache__/
+
+venv/
+.venv/
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+.terraform.lock.hcl
+*.tfvars
+
+*.egg-info/
+
+include/.kube/
+
