@@ -8,3 +8,5 @@ RUN apt-get update
 RUN apt install -y build-essential
 
 USER airflow
+
+RUN pip install pandas

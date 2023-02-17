@@ -9,7 +9,7 @@ import pandas as pd
 
 with DAG(
     dag_id="dados_climaticos_praia_grande",
-    start_date=pendulum.datetime(2023, 2, 9, tz="UTC"),
+    start_date=pendulum.datetime(2023, 1, 1, tz="UTC"),
     schedule_interval='0 0 * * 1', # executar toda segunda feira
 ) as dag:
 
@@ -19,14 +19,14 @@ with DAG(
     )
 
     def extrai_dados(data_interval_end: str):
-        city = 'Praia Grande'
+        city = 'Praia_Grande'
         key = os.getenv('VISUAL_CROSSING_KEY')
 
         URL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/%s/%s/%s?unitGroup=metric&include=days&key=%s&contentType=csv' % (city, data_interval_end, ds_add(data_interval_end, 7), key)
 
         dados = pd.read_csv(URL)
 
-        fp = "/storage/semana=%s" % data_interval_end
+        fp = "/storage/semana=%s/" % data_interval_end
 
         dados.to_csv(fp + 'dados_brutos.csv')
         dados[['datetime','tempmin','temp','tempmax']].to_csv(fp + 'temperatura.csv')
