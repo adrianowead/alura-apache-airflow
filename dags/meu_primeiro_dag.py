@@ -13,8 +13,8 @@ with DAG(
     tarefa_2 = EmptyOperator(task_id='tarefa_2')
     tarefa_3 = EmptyOperator(task_id='tarefa_3')
     tarefa_4 = BashOperator(
-        task_id='cria_pasta',
-        bash_command='echo "Meu primeiro teste" > "/storage/primeiro-dag={{data_interval_end}}.txt"'
+        task_id='cria_arquivo',
+        bash_command='echo "Meu primeiro teste" > "/storage/primeiro-dag={{data_interval_end.strftime("%Y-%m-%d")}}.txt"'
     )
 
     tarefa_1 >> [tarefa_2, tarefa_3]
