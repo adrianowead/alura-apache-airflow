@@ -1,5 +1,6 @@
 from airflow import DAG
 import pendulum
+from datetime import timedelta
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.macros import ds_add
@@ -11,6 +12,13 @@ with DAG(
     dag_id="dados_climaticos_praia_grande",
     start_date=pendulum.datetime(2023, 1, 1, tz="UTC"),
     schedule_interval='0 0 * * 1', # executar toda segunda feira
+    description="Busca dados climáticos",
+    catchup=False, # não executar retroativamente ao inicializar, não dispara agendamentos passados
+    default_args={
+        "depends_on_past": True, # define se as tarefas em sequência dependem da task anterior terem executado com sucesso
+        "retries": 3,
+        "retry_delay": timedelta(minutes=3),
+    }
 ) as dag:
 
     tarefa_1 = BashOperator(
